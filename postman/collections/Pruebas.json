@@ -1,0 +1,328 @@
+{
+	"info": {
+		"_postman_id": "22ee8d25-234b-413a-bc8d-aaaadaaa3145",
+		"name": "Pruebas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "16788583-22ee8d25-234b-413a-bc8d-aaaadaaa3145"
+	},
+	"item": [
+		{
+			"name": "Set Auth Header",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "39ff08ab-d508-47e8-ad8c-4ad5ddeb1b34",
+						"exec": [
+							"// Pre-request Script CORREGIDO\r",
+							"pm.environment.set(\"authHeader\", \"Basic \" + pm.environment.get(\"authToken\"));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0c5afa9-4325-435b-8920-cb4ec5e3bf10",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "33a9a7bc-02ef-4f54-9fed-07379baade60",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.1Range-Validation(33)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b933e207-ed43-43fd-84ba-e6d9ba0b31be",
+						"exec": [
+							"pm.test(\"Dependants validation error message\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    const errorObject = response[0];\r",
+							"// Verificar el mensaje de error específico\r",
+							"    pm.expect(errorObject.errorMessage).to.equal('The field Dependants must be between 0 and 32.');\r",
+							"\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "c1feb1d3-7a21-49af-b813-31384057e9ef",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"User\",\r\n    \"dependants\": 33\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.2Range-Validation(32)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f1bdb549-2112-4edb-ac11-d1ef6a7246c9",
+						"exec": [
+							"pm.test(\"Should return sucess\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "4a947b7e-6482-4bb4-967d-e079056ce231",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Test2\",\r\n    \"lastName\": \"User2\",\r\n    \"dependants\": 32\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.3Range-Validation (0)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83141ee2-5297-4cc6-ba21-398ff54be13e",
+						"exec": [
+							"pm.test(\"Should return sucess\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "e24916d1-bbb6-4347-bda8-208841b2473b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Test3\",\r\n    \"lastName\": \"User3\",\r\n    \"dependants\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.3Range-Validation (-1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "03036db4-41cd-41f2-89b2-22b6eb72446e",
+						"exec": [
+							"pm.test(\"Dependants validation error message\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    const errorObject = response[0];\r",
+							"// Verificar el mensaje de error específico\r",
+							"    pm.expect(errorObject.errorMessage).to.equal('The field Dependants must be between 0 and 32.');\r",
+							"\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "ea87aa4b-652a-4ac0-a83e-d9d37d32e01d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Test4\",\r\n    \"lastName\": \"User4\",\r\n    \"dependants\": -1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username\t}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ae60275c-ca26-4475-a356-ca42bb99a6f1",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b3414da4-679d-44ac-8e85-94ea68c104d3",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
